@@ -1,6 +1,7 @@
 package com.paulo.mongoWorkshop.resources;
 
 import com.paulo.mongoWorkshop.domain.Post;
+import com.paulo.mongoWorkshop.resources.util.URL;
 import com.paulo.mongoWorkshop.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,4 +24,10 @@ public class PostResource {
         return ResponseEntity.ok().body(obj);
     }
 
+    @RequestMapping(value ="/titlesearch", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
+        text = URL.decodeParam(text);
+        List<Post> obj = service.findByTitle(text);
+        return ResponseEntity.ok().body(obj);
+    }
 }
